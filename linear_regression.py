@@ -5,7 +5,8 @@ class LinearRegression():
     def __init__(self, learning_rate = 0.1, epochs = 1000):
         self.learning_rate = learning_rate
         self.epochs = epochs
-        self.weights, self.bias = None, None
+        self.weights = []
+        self.bias = 0
         self.losses, self.train_accuracies = [], []
     
     def sigmoid_function(self, x):
@@ -15,21 +16,26 @@ class LinearRegression():
         pass
 
     def compute_gradients(self, x, y, y_pred):
+        """
+        First looks at how many features we have. Then for each feature, it iterates and finds the weights for the different features. Then these weights are added to a list for grad_w and is returned. The bias on the other hand is only one, considering it is a linear regression. 
+        """
         # b_0 + b_1 * x -> b_0 = grad_b, b_1 = grad_w
         feature_amount = len(x)
         datapoints_amount = len(x[0])
         collect_grad_b, collect_grad_w = [], []
         for f in feature_amount:
-            grad_b = 0
             grad_w = 0
-            for b in range(datapoints_amount):
-                grad_b += (1 / datapoints_amount) * ((self.weights * x[f][b]) + self.bias - y[f][b])
             for w in x:
-                grad_w += (1 / datapoints_amount) * (x[f][w]) * ((self.weights * x[f][w]) + self.bias - y[f][w])
-            collect_grad_b.append(grad_b)
+                grad_w += (x[w] * (y_pred[w] - y[w]))
+            grad_w = (1 / datapoints_amount) * grad_w
             collect_grad_w.append(grad_w)
         
-        return collect_grad_w, collect_grad_b
+        grad_b = 0
+        for b in range(datapoints_amount):
+            grad_b += (y_pred[b] - y[b])
+        grad_b = (1 / datapoints_amount) * grad_b
+        
+        return collect_grad_w, grad_b
         
 
     def update_parameters(self, grad_w, grad_b):

@@ -7,6 +7,21 @@ class LinearRegression():
         self.epochs = epochs
         self.weights, self.bias = None, None
         self.losses, self.train_accuracies = [], []
+    
+    def sigmoid_function(self, x):
+        pass
+
+    def _compute_loss(self, y, y_pred):
+        pass
+
+    def compute_gradients(self, x, y, y_pred):
+        pass
+
+    def update_parameters(self, grad_w, grad_b):
+        pass
+
+    def accuracy(true_values, predictions):
+        return np.mean(true_values == predictions)
         
     def fit(self, X, y):
         """

@@ -40,8 +40,14 @@ class LinearRegression():
         self.weights -= self.learning_rate * grad_w
         self.bias -= self.learning_rate * grad_b
 
-    def accuracy(true_values, predictions):
-        return np.mean(true_values == predictions)
+    def accuracy(self, true_values, predictions):
+        return np.mean(1 - abs(predictions - true_values))
+
+    def normalise(self, X):
+        self.mean = np.mean(X, axis = 0)
+        self.std = np.std(X, axis = 0)
+
+        return ((X - self.mean) / self.std)
         
     def fit(self, X, y):
         """
@@ -53,10 +59,7 @@ class LinearRegression():
             y (array<m>): a vector of floats
         """
 
-        self.mean = np.mean(X, axis = 0)
-        self.std = np.std(X, axis = 0)
-
-        X = (X - self.mean) / self.std
+        X = self.normalise(X)
         
         self.weights = np.zeros(X.shape[1])
         self.bias = 0
@@ -68,7 +71,7 @@ class LinearRegression():
             self.update_parameters(grad_w, grad_b)
 
             loss = self._compute_loss(y, y_pred_here)
-            accuracies = self.accuracy((y, y_pred_here))
+            accuracies = self.accuracy(y, y_pred_here)
             self.train_accuracies.append(accuracies)
             self.losses.append(loss)
     
@@ -85,6 +88,8 @@ class LinearRegression():
         Returns:
             A length m array of floats
         """
+        X = self.normalise(X)
+
         return np.matmul(X, self.weights) + self.bias
         
 

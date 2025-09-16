@@ -15,7 +15,14 @@ class LinearRegression():
         pass
 
     def compute_gradients(self, x, y, y_pred):
-        pass
+        # b_0 + b_1 * x -> b_0 = grad_b, b_1 = grad_w
+        grad_b = 0
+        grad_w = 0
+        for b in x:
+            grad_b += (1 / len(x)) * ((self.weights * x[b]) + self.bias - y[b] )
+        for w in x:
+            grad_w += (1 / len(x)) * (x[w]) * ((self.weights * x[w]) + self.bias - y[w])
+        return grad_b, grad_w
 
     def update_parameters(self, grad_w, grad_b):
         pass

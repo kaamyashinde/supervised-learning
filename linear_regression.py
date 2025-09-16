@@ -60,8 +60,18 @@ class LinearRegression():
                 m rows (#samples) and n columns (#features)
             y (array<m>): a vector of floats
         """
-        # TODO: Implement
-        raise NotImplementedError("The fit method is not implemented yet.")
+        try:
+            self.weights = np.zeros(X.shape[1])
+            self.bias = 0
+
+            # Gradient Descent
+            for _ in range(self.epochs):
+                y_pred = np.matmul(self.weights, X.transpose()) + self.bias
+                grad_w, grad_b = self.compute_gradients((X, y, y_pred))
+                self.update_parameters(grad_w, grad_b)
+                
+        except:
+            raise Error("Something didnt work in the fit method")
     
     def predict(self, X):
         """

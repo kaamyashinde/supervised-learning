@@ -62,7 +62,8 @@ class LinearRegression():
             self.update_parameters(grad_w, grad_b)
 
             loss = self._compute_loss(y, y_pred_here)
-            self.train_accuracies.append(self.accuracy(y, y_pred_here))
+            accuracies = self.accuracy((y, y_pred_here))
+            self.train_accuracies.append(accuracies)
             self.losses.append(loss)
     
     def predict(self, X):

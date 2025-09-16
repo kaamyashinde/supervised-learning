@@ -13,7 +13,13 @@ class LinearRegression():
         pass
 
     def _compute_loss(self, y, y_pred):
-        pass
+        """
+        Uses the mean squred error as the loss function
+        """
+        sum = 0
+        for i in y:
+            sum += (y[i] - y_pred[i])**2
+        return ( 1 / (2 * len(y))) * sum
 
     def compute_gradients(self, x, y, y_pred):
         """

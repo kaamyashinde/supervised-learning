@@ -37,9 +37,8 @@ class LinearRegression():
         Gets the weights and bias arrays saved in the class.
         Iterates over each value in the arrays and updates it with the help of the learning rate and the gradient found.
         """
-        for w in self.weights:
-            self.weights[w] -= (self.learning_rate * grad_w[w])
-            self.bias -= (self.learning_rate * grad_b)
+        self.weights -= self.learning_rate * grad_w
+        self.bias -= self.learning_rate * grad_b
 
     def accuracy(true_values, predictions):
         return np.mean(true_values == predictions)

@@ -52,6 +52,12 @@ class LinearRegression():
                 m rows (#samples) and n columns (#features)
             y (array<m>): a vector of floats
         """
+
+        self.mean = np.mean(X, axis = 0)
+        self.std = np.std(X, axis = 0)
+
+        X = (X - self.mean) / self.std
+        
         self.weights = np.zeros(X.shape[1])
         self.bias = 0
 
@@ -79,8 +85,8 @@ class LinearRegression():
         Returns:
             A length m array of floats
         """
-        # TODO: Implement
-        raise NotImplementedError("The predict method is not implemented yet.")
+        return np.matmul(X, self.weights) + self.bias
+        
 
 
 

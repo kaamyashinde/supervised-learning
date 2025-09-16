@@ -45,8 +45,7 @@ class LinearRegression():
         """
         for w in self.weights:
             self.weights[w] -= (self.learning_rate * grad_w[w])
-        for b in self.bias:
-            self.bias[b] -= (self.learning_rate * grad_b[b])
+            self.bias -= (self.learning_rate * grad_b)
 
     def accuracy(true_values, predictions):
         return np.mean(true_values == predictions)

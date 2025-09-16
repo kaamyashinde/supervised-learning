@@ -29,11 +29,18 @@ class LinearRegression():
             collect_grad_b.append(grad_b)
             collect_grad_w.append(grad_w)
         
-        return collect_grad_b, collect_grad_w
+        return collect_grad_w, collect_grad_b
         
 
     def update_parameters(self, grad_w, grad_b):
-        pass
+        """
+        Gets the weights and bias arrays saved in the class.
+        Iterates over each value in the arrays and updates it with the help of the learning rate and the gradient found.
+        """
+        for w in self.weights:
+            self.weights[w] -= (self.learning_rate * grad_w[w])
+        for b in self.bias:
+            self.bias[b] -= (self.learning_rate * grad_b[b])
 
     def accuracy(true_values, predictions):
         return np.mean(true_values == predictions)

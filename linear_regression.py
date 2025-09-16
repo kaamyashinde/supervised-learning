@@ -74,6 +74,10 @@ class LinearRegression():
                 y_pred = np.matmul(self.weights, X.transpose()) + self.bias
                 grad_w, grad_b = self.compute_gradients((X, y, y_pred))
                 self.update_parameters(grad_w, grad_b)
+
+                loss = self._compute_loss(y, y_pred)
+                self.train_accuracies.append(self.accuracy(y, y_pred))
+                self.losses.append(loss)
                 
         except:
             raise Error("Something didnt work in the fit method")

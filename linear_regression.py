@@ -16,10 +16,7 @@ class LinearRegression():
         """
         Uses the mean squred error as the loss function
         """
-        sum = 0
-        for i in y:
-            sum += (y[i] - y_pred[i])**2
-        return ( 1 / (2 * len(y))) * sum
+        return np.mean((y - y_pred) ** 2) / 2
 
     def compute_gradients(self, x, y, y_pred):
         """

@@ -18,27 +18,18 @@ class LinearRegression():
         """
         return np.mean((y - y_pred) ** 2) / 2
 
-    def compute_gradients(self, x, y, y_pred):
+    def compute_gradients(self, X, y, y_pred):
         """
         First looks at how many features we have. Then for each feature, it iterates and finds the weights for the different features. Then these weights are added to a list for grad_w and is returned. The bias on the other hand is only one, considering it is a linear regression. 
         """
-        # b_0 + b_1 * x -> b_0 = grad_b, b_1 = grad_w
-        feature_amount = len(x)
-        datapoints_amount = len(x[0])
-        collect_grad_b, collect_grad_w = [], []
-        for f in feature_amount:
-            grad_w = 0
-            for w in x:
-                grad_w += (x[w] * (y_pred[w] - y[w]))
-            grad_w = (1 / datapoints_amount) * grad_w
-            collect_grad_w.append(grad_w)
-        
-        grad_b = 0
-        for b in range(datapoints_amount):
-            grad_b += (y_pred[b] - y[b])
-        grad_b = (1 / datapoints_amount) * grad_b
-        
-        return collect_grad_w, grad_b
+        m = X.shape[0] #number of samples
+
+        # Gradients
+        error = y_pred - y
+        grad_w = (X.T @ error) / m 
+        grad_b = np.mean(error)
+
+        return grad_w, grad_b
         
 
     def update_parameters(self, grad_w, grad_b):

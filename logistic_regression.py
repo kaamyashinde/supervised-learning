@@ -54,9 +54,7 @@ class LogisticRegression():
         return np.mean(true_values == predictions)
 
     def normalise(self, X):
-        self.mean = np.mean(X, axis = 0)
-        self.std = np.std(X, axis = 0)
-
+    
         return ((X - self.mean) / self.std)
         
     def fit(self, X, y):
@@ -68,6 +66,10 @@ class LogisticRegression():
                 m rows (#samples) and n columns (#features)
             y (array<m>): a vector of floats
         """
+
+        self.mean = np.mean(X, axis = 0)
+        self.std = np.std(X, axis = 0)
+
 
         X = self.normalise(X)
         
@@ -103,6 +105,7 @@ class LogisticRegression():
         Returns:
             A length m array of floats
         """
+        X = self.normalise(X)
         lin_model = np.matmul(X, self.weights) + self.bias
         y_pred = self.sigmoid_function(lin_model)
         return [1 if _y > 0.5 else 0 for _y in y_pred]

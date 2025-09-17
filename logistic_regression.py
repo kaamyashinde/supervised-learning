@@ -13,6 +13,7 @@ class LogisticRegression():
         """
         Scales the values to the interval [0, 1]
         """
+        x = np.clip(x, -500, 500)  # prevent overflow
         return 1 / (1 + np.exp(-x))
 
     def _compute_loss(self, y, y_pred):
@@ -53,8 +54,8 @@ class LogisticRegression():
         return np.mean(true_values == predictions)
 
     def normalise(self, X):
-    
-        return ((X - self.mean) / self.std)
+        safe_std = np.where(self.std == 0, 1, self.std)  # replace zeros with 1
+        return (X - self.mean) / safe_std
 
     def feature_engineering(self, X):
         data = X.copy()
@@ -85,6 +86,8 @@ class LogisticRegression():
                 m rows (#samples) and n columns (#features)
             y (array<m>): a vector of floats
         """
+        X = X.astype(np.float64)
+        y = y.astype(np.float64)
 
         X = self.feature_engineering(X)
 
@@ -94,8 +97,9 @@ class LogisticRegression():
 
         X = self.normalise(X)
         
-        self.weights = np.zeros(X.shape[1])
-        self.bias = 0
+        self.weights = np.zeros(X.shape[1], dtype=np.float64)
+        self.bias = 0.0
+
 
         # Gradient Descent
         for _ in range(self.epochs):

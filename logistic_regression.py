@@ -71,12 +71,16 @@ class LogisticRegression():
         # Gradient Descent
         for _ in range(self.epochs):
             lin_model = np.matmul(self.weights, X.transpose()) + self.bias
+            
             y_pred = self.sigmoid_function(lin_model)
             grad_w, grad_b = self.compute_gradients(X, y, y_pred)
             self.update_parameters(grad_w, grad_b)
 
             loss = self._compute_loss(y, y_pred)
-            accuracies = self.accuracy(y, y_pred)
+
+            pred_to_class = [1 if _y > 0.5 else 0 for _y in y_pred]
+
+            accuracies = self.accuracy(y, pred_to_class)
             self.train_accuracies.append(accuracies)
             self.losses.append(loss)
     

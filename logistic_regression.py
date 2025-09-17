@@ -18,9 +18,9 @@ class LogisticRegression():
 
     def _compute_loss(self, y, y_pred):
         """
-        Uses the mean squred error as the loss function
+        Uses cross-entropy loss
         """
-        pass
+        return -y * np.log(y_pred) - (1 - y) * np.log(1 - y_pred)
 
     def compute_gradients(self, X, y, y_pred):
         """

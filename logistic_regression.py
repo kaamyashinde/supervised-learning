@@ -1,4 +1,5 @@
 import numpy as np
+import math 
 
 class LogisticRegression():
     
@@ -10,7 +11,10 @@ class LogisticRegression():
         self.losses, self.train_accuracies = [], []
     
     def sigmoid_function(self, x):
-        pass
+        """
+        Scales the values to the interval [0, 1]
+        """
+        return 1 / (1 + math.exp((-self.weights @ x) + self.bias ))
 
     def _compute_loss(self, y, y_pred):
         """

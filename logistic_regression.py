@@ -45,7 +45,10 @@ class LogisticRegression():
         self.bias -= self.learning_rate * grad_b
 
     def accuracy(self, true_values, predictions):
-        pass
+        """
+        Accuracy for binary
+        """
+        return np.mean(true_values == predictions)
 
     def normalise(self, X):
         self.mean = np.mean(X, axis = 0)

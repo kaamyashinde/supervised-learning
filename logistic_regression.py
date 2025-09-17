@@ -14,7 +14,7 @@ class LogisticRegression():
         """
         Scales the values to the interval [0, 1]
         """
-        return 1 / (1 + math.exp((-self.weights @ x) + self.bias ))
+        return 1 / (1 + math.exp(x))
 
     def _compute_loss(self, y, y_pred):
         """
@@ -100,9 +100,9 @@ class LogisticRegression():
         Returns:
             A length m array of floats
         """
-        X = self.normalise(X)
-
-        return np.matmul(X, self.weights) + self.bias
+        lin_model = np.matmul(X, self.weights) + self.bias
+        y_pred = self.sigmoid_function(lin_model)
+        return [1 if _y > 0.5 else 0 for _y in y_pred]
         
 
 

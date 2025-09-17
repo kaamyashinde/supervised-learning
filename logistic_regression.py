@@ -20,7 +20,10 @@ class LogisticRegression():
         """
         Uses cross-entropy loss
         """
-        return -y * np.log(y_pred) - (1 - y) * np.log(1 - y_pred)
+        eps = 1e-12
+        y_pred = np.clip(y_pred, eps, 1 - eps)
+        loss_vector = -y * np.log(y_pred) - (1 - y) * np.log(1 - y_pred)
+        return np.mean(loss_vector)  # <-- single scalar
 
     def compute_gradients(self, X, y, y_pred):
         """

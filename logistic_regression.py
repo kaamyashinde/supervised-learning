@@ -14,7 +14,7 @@ class LogisticRegression():
         """
         Scales the values to the interval [0, 1]
         """
-        return 1 / (1 + math.exp(x))
+        return 1 / (1 + math.exp(-x))
 
     def _compute_loss(self, y, y_pred):
         """

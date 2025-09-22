@@ -3,12 +3,13 @@ from sklearn.preprocessing import PolynomialFeatures
 
 class LogisticRegression():
     
-    def __init__(self, learning_rate = 0.1, epochs = 1000):
+    def __init__(self, learning_rate = 0.1, epochs = 1000, apply_feature_engineering = True):
         self.learning_rate = learning_rate
         self.epochs = epochs
         self.weights = []
         self.bias = 0
         self.losses, self.train_accuracies = [], []
+        self.apply_feature_engineering = apply_feature_engineering
     
     def sigmoid_function(self, x):
         """
@@ -73,8 +74,8 @@ class LogisticRegression():
         """
         X = X.astype(np.float64)
         y = y.astype(np.float64)
-
-        X = self.feature_engineering(X)
+        if self.apply_feature_engineering == True:
+            X = self.feature_engineering(X)
 
         self.mean = np.mean(X, axis = 0)
         self.std = np.std(X, axis = 0)
@@ -115,6 +116,8 @@ class LogisticRegression():
         Returns:
             A length m array of floats
         """
+        if self.apply_feature_engineering == True:
+            X = self.feature_engineering(X)
         X = self.normalise(X)
         lin_model = np.matmul(X, self.weights) + self.bias
         y_pred = self.sigmoid_function(lin_model)

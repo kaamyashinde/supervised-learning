@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.preprocessing import PolynomialFeatures
 
 class LogisticRegression():
     
@@ -58,24 +59,8 @@ class LogisticRegression():
         return (X - self.mean) / safe_std
 
     def feature_engineering(self, X):
-        data = X.copy()
-        
-        product = np.ones(X.shape[0])
-        
-        for i in range(X.shape[1]):
-            col = X[:, i]
-            
-            # Square the column and add it
-            squared = (col ** 2).reshape(-1, 1)
-            data = np.hstack((data, squared))
-            
-            # Update product element-wise
-            product *= col
-        
-        # Add product as final column
-        data = np.hstack((data, product.reshape(-1, 1)))
-        
-        return data
+        transformer = PolynomialFeatures(degree=2, include_bias=False)
+        return transformer.fit_transform(X)
 
     def fit(self, X, y):
         """
